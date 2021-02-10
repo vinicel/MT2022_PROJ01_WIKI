@@ -30,7 +30,7 @@ A complete documentation with a clean repository is mandatory.
 
 ## Model Structure
 
-Todo => add database schema
+![Alt text](https://user-images.githubusercontent.com/29546258/107534201-fea3b800-6bbf-11eb-9258-7487036ba847.jpg)
 
 ## Used Package
 
