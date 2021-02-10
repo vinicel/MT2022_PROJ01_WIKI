@@ -1,7 +1,7 @@
-# description
+# Description
 
-## lancer le programme : 
+## Launch program : 
 
-## dependances : 
+## Dependencies : 
 
-## documentation api : 
+## Api documentation : 
