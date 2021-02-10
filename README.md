@@ -21,11 +21,9 @@ A complete documentation with a clean repository is mandatory.
 
 ``` bash
 <Wiki-Go>/
-├─ src/
-│   ├─ Controllers/
-│   ├─ Models/
-│   ├─ Services/
-│   ├─ Views/
+├─ api/
+├─ controllers/
+├─ models/
 ├─ main.go
 └─ README.md
 ```
