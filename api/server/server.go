@@ -12,7 +12,10 @@ type Server struct {
 
 func (s *Server) Run() *Server {
 	s.InitialiseRoutes()
-	log.Fatal(http.ListenAndServe(":8080", s.Router))
+	err := http.ListenAndServe(":8084", s.Router)
+	if err != nil {
+	 	log.Fatal("ListenAndServe: ", err)
+	}
 
 	return s
 }
