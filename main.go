@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"github.com/vinicel/Wiki-Go/api/server"
+)
 
 func main()  {
-	fmt.Print("Hello, Wolrd")
+	api := server.Server{}
+	api.InitialiseRoutes()
+	api.Run()
+
 }
