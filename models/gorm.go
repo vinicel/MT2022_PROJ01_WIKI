@@ -33,6 +33,13 @@ type Comment struct {
 	Account 	Account
 }
 
+type ModelInterface interface {
+	create()
+	get(in int)
+	getAll()
+	update(id int)
+}
+
 func InitGorm() *gorm.DB {
 	dsn := "root:admin@tcp(127.0.0.1:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
