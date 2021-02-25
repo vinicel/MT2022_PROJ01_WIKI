@@ -35,7 +35,7 @@ type Comment struct {
 
 type ModelInterface interface {
 	create()
-	get(in int)
+	get(id int)
 	getAll()
 	update(id int)
 }
