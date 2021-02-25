@@ -8,25 +8,29 @@ import (
 
 type Account struct {
 	gorm.Model
-	Email string
-	Password string
-	Firstname string
-	Lastname string
+	Email 		string 	`gorm:"not null;type:varchar(255);"`
+	Password 	string	`gorm:"not null;type:varchar(255);"`
+	Firstname 	string	`gorm:"not null;type:varchar(30);"`
+	Lastname 	string	`gorm:"not null;type:varchar(30);"`
 
 }
 
 type Article struct {
 	gorm.Model
-	Title string
-	Content string
-
+	Title 		string	`gorm:"not null;type:varchar(40);"`
+	Content 	string	`gorm:"not null"`
+	AuthorID	int
+	Author 		Account
 }
 
 type Comment struct {
 	gorm.Model
-	Title string
-	Content string
-
+	Title 		string	`gorm:"type:varchar(40);"`
+	Content 	string	`gorm:"not null;type:varchar(150);"`
+	ArticleID	int
+	Article 	Article
+	AccountID	int
+	Account 	Account
 }
 
 func InitGorm() *gorm.DB {
@@ -35,18 +39,9 @@ func InitGorm() *gorm.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = db.AutoMigrate(&Account{})
-	if err != nil {
-		log.Println(err)
-	}
-	err = db.AutoMigrate(&Article{})
-	if err != nil {
-		log.Println(err)
-	}
-	err = db.AutoMigrate(&Comment{})
+	err = db.AutoMigrate(&Account{}, &Article{}, &Comment{})
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	return db
 }
