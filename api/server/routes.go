@@ -8,4 +8,5 @@ import (
 func (s *Server) InitialiseRoutes() {
 	s.Router = mux.NewRouter()
 	s.Router.HandleFunc("/", controllers.HelloWorldHandler).Methods("GET")
+	s.Router.HandleFunc("/articles", s.addDbInHandler(controllers.GetAllArticles)).Methods("GET")
 }
