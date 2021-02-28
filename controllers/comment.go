@@ -3,11 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/Wiki-Go/models"
+	"gorm.io/gorm"
 	"io/ioutil"
 	"net/http"
 )
 
-func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
+func CreateCommentHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
 	jsonBody, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
@@ -22,7 +23,6 @@ func CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db := models.InitGorm()
 	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content}
 	db.Create(comment)
 

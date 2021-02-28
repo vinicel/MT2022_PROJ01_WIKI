@@ -25,3 +25,9 @@ func (s *Server) Run() *Server {
 	return s
 }
 
+func (s *Server) addDbInHandler(fn func (http.ResponseWriter, *http.Request, *gorm.DB)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r, s.DB)
+	}
+}
+

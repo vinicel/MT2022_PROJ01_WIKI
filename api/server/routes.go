@@ -8,5 +8,5 @@ import (
 func (s *Server) InitialiseRoutes() {
 	s.Router = mux.NewRouter()
 	s.Router.HandleFunc("/", controllers.HelloWorldHandler).Methods("GET")
-	s.Router.HandleFunc("/comments", controllers.CreateCommentHandler).Methods("POST")
+	s.Router.HandleFunc("/comments", s.addDbInHandler(controllers.CreateCommentHandler)).Methods("POST")
 }
