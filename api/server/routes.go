@@ -5,8 +5,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func (s *Server) InitialiseRoutes() {
+func (s *Server) InitialiseRoutes(controller *controllers.Controller) {
 	s.Router = mux.NewRouter()
 	s.Router.HandleFunc("/", controllers.HelloWorldHandler).Methods("GET")
-	s.Router.HandleFunc("/articles", s.addDbInHandler(controllers.GetAllArticles)).Methods("GET")
+	s.Router.HandleFunc("/articles", controller.GetAllArticles).Methods("GET")
 }

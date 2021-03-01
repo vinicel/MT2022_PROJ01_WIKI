@@ -4,18 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Wiki-Go/models"
-	"gorm.io/gorm"
 	"net/http"
 )
 
-func GetAllArticles(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
+func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	var article models.Article
 	type result struct {
 		ID		int		`json:"id"`
 		Title 	string	`json:"title"`
 	}
 	var res []result
- 	db.Model(&article).Select("ID", "Title").Find(&res)
+ 	c.Db.Model(&article).Select("ID", "Title").Find(&res)
 	fmt.Printf("%v", res)
 	output, err := json.Marshal(res)
 	if err != nil {
