@@ -17,10 +17,6 @@ type Accounts struct {
 	UpdatedAt 	time.Time `json:"updated_at"`
 }
 
-func Hash(password string) ([]byte, error) {
-	return bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-}
-
 func (accounts *Accounts) Validate() (map[string]interface{}, bool) {
 
 	if !strings.Contains(accounts.Email, "@") {
