@@ -7,5 +7,5 @@ import (
 
 func (s *Server) InitialiseRoutes() {
 	s.Router = mux.NewRouter()
-	s.Router.HandleFunc("/", controllers.HelloWorldHandler).Methods("GET")
+	s.Router.HandleFunc("/api/user/new", controllers.CreateUserHandler).Methods("POST")
 }
