@@ -17,6 +17,10 @@ type Accounts struct {
 	UpdatedAt 	time.Time `json:"updated_at"`
 }
 
+type Database struct {
+	db 	gorm.DB
+}
+
 func (accounts *Accounts) Validate() (map[string]interface{}, bool) {
 
 	if !strings.Contains(accounts.Email, "@") {
@@ -37,15 +41,21 @@ func (accounts *Accounts) Validate() (map[string]interface{}, bool) {
 	return u.Message(false, "Requiremend passed"), true
 }
 
-func (accounts *Accounts) Create() (map[string]interface{})  {
+func (accounts *Accounts) CreateUser() (map[string]interface{}) {
 	if resp, ok := accounts.Validate(); !ok {
 		return resp
 	}
 
+	v := &Database{}
+
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(accounts.Password), bcrypt.DefaultCost)
 	accounts.Password = string(hashedPassword)
 
-	InitGorm().Create(accounts)
+	err := v.db.Create(accounts).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return u.Message(false, "Connection error. please retry")
+	}
+	//InitGorm().Create(accounts)
 
 	response := u.Message(true, "Account created")
 	response["account"] = accounts

@@ -22,6 +22,6 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
-	resp := accounts.Create()
+	resp := accounts.CreateUser()
 	u.Respond(w, resp)
 }
