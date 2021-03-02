@@ -6,9 +6,9 @@ import (
 )
 
 func main()  {
-	models.InitGorm()
-	api := server.Server{}
-	api.InitialiseRoutes()
-	api.Run()
 
+	api := server.Server{
+		DB: models.InitGorm(),
+	}
+	api.Run()
 }
