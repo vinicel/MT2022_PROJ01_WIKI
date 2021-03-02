@@ -24,3 +24,8 @@ func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(output)
 }
+
+
+func (c *Controller) GetOne(w http.ResponseWriter, r *http.Request) {
+	
+}
