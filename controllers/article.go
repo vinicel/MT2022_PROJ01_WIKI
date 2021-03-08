@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Wiki-Go/models"
+	"github.com/gorilla/mux"
+	"log"
 	"net/http"
+	"strconv"
 )
 
 func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
@@ -27,5 +30,15 @@ func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 
 
 func (c *Controller) GetOne(w http.ResponseWriter, r *http.Request) {
-	
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+	articleModel := &models.ArticleModel{
+		Db: c.Db,
+	}
+	res, _ := articleModel.GetOne(id)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(res))
 }
