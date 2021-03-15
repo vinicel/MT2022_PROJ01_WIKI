@@ -33,12 +33,21 @@ func (c *Controller) GetOne(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 	if err != nil {
-		log.Fatal(err)
+		code := http.StatusBadRequest
+		http.Error(w, http.StatusText(code), code)
+		log.Println(err)
 	}
 	articleModel := &models.ArticleModel{
 		Db: c.Db,
 	}
-	res, _ := articleModel.GetOne(id)
+	article, _ := articleModel.GetOne(id)
+	res, err := json.Marshal(article)
+	if err != nil {
+		code := http.StatusInternalServerError
+		http.Error(w, http.StatusText(code), code)
+		log.Println(err)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte(res))
+	w.Write(res)
 }

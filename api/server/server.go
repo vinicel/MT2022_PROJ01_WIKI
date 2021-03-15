@@ -19,7 +19,7 @@ func (s *Server) Run() *Server {
 	s.InitialiseRoutes(controller)
 	//s.DB = models.InitGorm()
 	// defer s.DB.Close()
-	err := http.ListenAndServe(":8084", s.Router)
+	err := http.ListenAndServe(":8080", s.Router)
 	if err != nil {
 	 	log.Fatal("ListenAndServe: ", err)
 	}

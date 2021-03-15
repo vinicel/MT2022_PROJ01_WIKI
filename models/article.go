@@ -3,13 +3,30 @@ package models
 import (
 	"encoding/json"
 	"gorm.io/gorm"
+	"time"
 )
 
 type ArticleModel struct {
 	Db		*gorm.DB
 }
 
-func (am *ArticleModel) getAll() ([]byte, error) {
+type RelationAuthorResponse struct {
+	ID 		  int
+	Firstname string
+	Lastname  string
+}
+
+type GetOneResponse struct {
+	ID        int
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Title	  string
+	Content	  string
+	AuthorID  int
+	Author	  Account
+}
+
+func (am *ArticleModel) GetAll() ([]byte, error) {
 	type result struct {
 		ID		int		`json:"id"`
 		Title	string	`json:"title"`
@@ -24,7 +41,10 @@ func (am *ArticleModel) getAll() ([]byte, error) {
 	return toJson, nil
 }
 
-
-func (am *ArticleModel) GetOne(id int) (string, error) {
-	return `{"toto": "fsd"}`, nil
+func (am *ArticleModel) GetOne(id int) (Article, error) {
+	article := Article{}
+//	res := GetOneResponse{}
+	am.Db.Model(article).Where("id = ?", id).Find(&article)
+	return article, nil
 }
+
