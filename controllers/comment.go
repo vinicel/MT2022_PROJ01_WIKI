@@ -3,12 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/Wiki-Go/models"
-	"gorm.io/gorm"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
 )
 
-func CreateCommentHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
+func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	jsonBody, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
@@ -24,13 +24,22 @@ func CreateCommentHandler(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
 	}
 
 	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content}
-	db.Create(comment)
+	c.Db.Create(comment)
 
-	output, err := json.Marshal(comment)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	w.Header().Set("Content-type", "application/json")
-	w.Write(output)
+	c.WriteJson(w, comment)
+}
+
+func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) {
+	var comments []models.Comment
+	c.Db.Find(&comments)
+
+	c.WriteJson(w, comments)
+}
+
+func (c *Controller) GetOneCommentHandler(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	var comment models.Comment
+	c.Db.First(&comment, params["id"])
+
+	c.WriteJson(w, comment)
 }
