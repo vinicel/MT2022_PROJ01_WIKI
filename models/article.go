@@ -23,7 +23,7 @@ type GetOneResponse struct {
 	Title	  string
 	Content	  string
 	AuthorID  int
-	Author	  Account
+	Author	  RelationAuthorResponse
 }
 
 func (am *ArticleModel) GetAll() ([]byte, error) {
@@ -33,7 +33,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	}
 	var res []result
 	modelArticle := Article{}
-	am.Db.Model(modelArticle).Select("ID", "Title").Find(&res)
+	am.Db.Model(modelArticle).Association("Accounts").Find(&res)
 	toJson, err := json.Marshal(res)
 	if err != err {
 		return nil, err
@@ -41,10 +41,10 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	return toJson, nil
 }
 
-func (am *ArticleModel) GetOne(id int) (Article, error) {
+func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
 	article := Article{}
-//	res := GetOneResponse{}
-	am.Db.Model(article).Where("id = ?", id).Find(&article)
-	return article, nil
+	res := GetOneResponse{}
+	am.Db.Model(article).Where("id = ?", id).Find(&res)
+	return res, nil
 }
 
