@@ -2,8 +2,9 @@ package models
 
 import (
 	"encoding/json"
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type ArticleModel struct {
@@ -24,6 +25,11 @@ type GetOneResponse struct {
 	Content	  string
 	AuthorID  int
 	Author	  RelationAuthorResponse
+}
+
+type CreateArticleDto struct {
+	Title string
+	Content string
 }
 
 func (am *ArticleModel) GetAll() ([]byte, error) {
