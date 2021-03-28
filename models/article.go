@@ -27,11 +27,6 @@ type GetOneResponse struct {
 	Author	  RelationAuthorResponse
 }
 
-type CreateArticleDto struct {
-	Title string
-	Content string
-}
-
 func (am *ArticleModel) GetAll() ([]byte, error) {
 	type result struct {
 		ID		int		`json:"id"`

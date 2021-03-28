@@ -62,7 +62,7 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	var articleDto models.CreateArticleDto
+	var articleDto models.Article
 	err = json.Unmarshal(jsonBody, &articleDto)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -76,5 +76,10 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 }
 
 func (c *Controller) UpdateArticle(w http.ResponseWriter, r *http.Request){
-	
+	params := mux.Vars(r)
+	var articleDto models.Article
+
+	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content}
+	c.Db.First(&article, params["id"]).Updates(map[string]interface{}{"title": articleDto.Title, "content": articleDto.Content})
+	c.WriteJson(w, article)
 }
