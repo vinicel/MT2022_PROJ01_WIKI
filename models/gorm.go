@@ -11,7 +11,7 @@ type Account struct {
 	Email 		string 	`gorm:"not null;type:varchar(255);"`
 	Password 	string	`gorm:"not null;type:varchar(255);"`
 	Firstname 	string	`gorm:"not null;type:varchar(30);"`
-	Lastname 	string	`gorm:"not null;type:varchar(30);"`
+	Lastname 	string	`gorm:"not null;type:varchar(30);omitempty"`
 
 }
 
@@ -34,14 +34,14 @@ type Comment struct {
 }
 
 type ModelInterface interface {
-	create()
-	get(id int)
-	getAll()
-	update(id int)
+	Create()
+	GetOne(id int)
+	GetAll()
+	Update(id int)
 }
 
 func InitGorm() *gorm.DB {
-	dsn := "root:admin@tcp(127.0.0.1:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:@tcp(127.0.0.1:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)

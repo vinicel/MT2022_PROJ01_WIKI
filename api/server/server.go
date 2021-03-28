@@ -17,11 +17,17 @@ func (s *Server) Run() *Server {
 		Db: models.InitGorm(),
 	}
 	s.InitialiseRoutes(controller)
-	err := http.ListenAndServe(":8084", s.Router)
+	// defer s.DB.Close()
+	err := http.ListenAndServe(":8080", s.Router)
 	if err != nil {
 	 	log.Fatal("ListenAndServe: ", err)
 	}
 
 	return s
 }
-
+/*
+func (s *Server) addDbInHandler(fn func (http.ResponseWriter, *http.Request, *gorm.DB)) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fn(w, r, s.DB)
+	}
+}*/
