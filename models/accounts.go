@@ -5,7 +5,6 @@ import (
 	u "github.com/Wiki-Go/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"log"
 	"strings"
 	"time"
 )
@@ -54,10 +53,6 @@ func (accounts *Database) CreateUser() (map[string]interface{}) {
 	accounts.Account.Password = string(hashedPassword)
 	fmt.Printf("Email: %v\n Password: %v\n Firstname: %v\n Lastname: %v\n", accounts.Account.Email, accounts.Account.Password, accounts.Account.Firstname,accounts.Account.Lastname)
 	accounts.Db.Create(&accounts.Account)
-	if err != nil && err != gorm.ErrRecordNotFound {
-		log.Fatal(err)
-		return u.Message(false, "Connection error. please retry")
-	}
 
 	response := u.Message(true, "Account created")
 	response["account"] = accounts

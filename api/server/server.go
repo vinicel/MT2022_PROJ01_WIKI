@@ -14,10 +14,9 @@ type Server struct {
 
 func (s *Server) Run() *Server {
 	controller := &controllers.Controller{
-		Db: s.DB,
+		Db: models.InitGorm(),
 	}
 	s.InitialiseRoutes(controller)
-	s.DB = models.InitGorm()
 	// defer s.DB.Close()
 	err := http.ListenAndServe(":8080", s.Router)
 	if err != nil {
