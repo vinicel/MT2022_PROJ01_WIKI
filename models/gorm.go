@@ -11,7 +11,7 @@ type Account struct {
 	Email 		string 	`gorm:"not null;type:varchar(255);"`
 	Password 	string	`gorm:"not null;type:varchar(255);"`
 	Firstname 	string	`gorm:"not null;type:varchar(30);"`
-	Lastname 	string	`gorm:"not null;type:varchar(30);"`
+	Lastname 	string	`gorm:"not null;type:varchar(30);omitempty"`
 
 }
 
@@ -34,10 +34,10 @@ type Comment struct {
 }
 
 type ModelInterface interface {
-	create()
-	get(id int)
-	getAll()
-	update(id int)
+	Create()
+	GetOne(id int)
+	GetAll()
+	Update(id int)
 }
 
 func InitGorm() *gorm.DB {
