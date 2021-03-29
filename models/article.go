@@ -11,19 +11,20 @@ type ArticleModel struct {
 }
 
 type RelationAuthorResponse struct {
-	ID 		  int
-	Firstname string
-	Lastname  string
+	ID 		  int	 `json:"id"`
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
 }
 
 type GetOneResponse struct {
-	ID        int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Title	  string
-	Content	  string
-	AuthorID  int
-	Author	  RelationAuthorResponse
+	ID        int					`json:"id"`
+	CreatedAt time.Time 			`json:"createdAt"`
+	UpdatedAt time.Time 			`json:"updatedAt"`
+	Title	  string 				`json:"title"`
+	Content	  string				`json:"content"`
+	AuthorID  int					`json:"authorId"`
+	Firstname string				`json:"authorName"`
+//	Author	  RelationAuthorResponse `json:"author"`
 }
 
 func (am *ArticleModel) GetAll() ([]byte, error) {
@@ -42,9 +43,11 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 }
 
 func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
-	article := Article{}
 	res := GetOneResponse{}
-	am.Db.Model(article).Where("id = ?", id).Find(&res)
+	am.Db = am.Db.Select("a.*, ac.firstname")
+	am.Db = am.Db.Where("a.id", 8)
+	am.Db = am.Db.Joins("INNER JOIN accounts ac on ac.id = a.author_id")
+	am.Db.Table("articles a").Find(&res)
 	return res, nil
 }
 
