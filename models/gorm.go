@@ -27,8 +27,8 @@ type Comment struct {
 	gorm.Model
 	Title 		string	`gorm:"type:varchar(40);"`
 	Content 	string	`gorm:"not null;type:varchar(150);"`
-	//ArticleID	int
-	//Article 	Article
+	ArticleID	int
+	Article 	Article
 	//AccountID	int
 	//Account 	Account
 }
