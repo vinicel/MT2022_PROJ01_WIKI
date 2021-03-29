@@ -75,11 +75,23 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 	c.WriteJson(w, article)
 }
 
-// func (c *Controller) UpdateArticle(w http.ResponseWriter, r *http.Request){
-// 	params := mux.Vars(r)
-// 	var articleDto models.Article
+func (c *Controller) UpdateArticle(w http.ResponseWriter, r *http.Request){
+	params := mux.Vars(r)
+	jsonBody, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	var articleDto models.Article
 
-// 	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content}
-// 	c.Db.First(&article, params["id"]).Updates(map[string]interface{}{"title": articleDto.Title, "content": articleDto.Content})
-// 	c.WriteJson(w, article)
-// }
+	err = json.Unmarshal(jsonBody, &articleDto)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content}
+	c.Db.First(&article, params["id"]).Updates(map[string]interface{}{"title": articleDto.Title, "content": articleDto.Content})
+	c.WriteJson(w, article)
+}

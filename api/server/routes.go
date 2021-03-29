@@ -12,7 +12,7 @@ func (s *Server) InitialiseRoutes(controller *controllers.Controller) {
 	s.Router.HandleFunc("/comments", controller.GetCommentsHandler).Methods("GET")
 	s.Router.HandleFunc("/comments/{id}", controller.GetOneCommentHandler).Methods("GET")
 	s.Router.HandleFunc("/article", controller.CreateArticle).Methods("POST")
-	// s.Router.HandleFunc("/article/{id}", controller.UpdateArticle).Methods("PUT")
+	s.Router.HandleFunc("/article/{id:[0-9]+}", controller.UpdateArticle).Methods("PUT")
 	s.Router.HandleFunc("/articles", controller.GetAllArticles).Methods("GET")
 	s.Router.HandleFunc("/articles/{id:[0-9]+}", controller.GetOne).Methods("GET")
 }
