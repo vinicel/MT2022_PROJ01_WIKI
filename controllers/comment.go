@@ -35,7 +35,7 @@ func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request
 	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article}
 	c.Db.Create(comment)
 
-	c.WriteJson(w, view.presentComment(comment))
+	c.WriteJson(w, view.PresentComment(*comment))
 }
 
 func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +43,7 @@ func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) 
 	var comments []models.Comment
 	c.Db.Where("article_id = ?", params["articleId"]).Find(&comments)
 
-	c.WriteJson(w, view.presentComments(comments))
+	c.WriteJson(w, view.PresentComments(comments))
 }
 
 func (c *Controller) GetOneCommentHandler(w http.ResponseWriter, r *http.Request) {
@@ -55,5 +55,5 @@ func (c *Controller) GetOneCommentHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	c.WriteJson(w, view.presentCommentDetails(comment))
+	c.WriteJson(w, view.PresentCommentDetails(comment))
 }

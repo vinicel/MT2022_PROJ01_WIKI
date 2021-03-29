@@ -4,7 +4,7 @@ import (
 	"github.com/Wiki-Go/models"
 )
 
-func presentArticle(article models.Article) Article {
+func PresentArticle(article models.Article) Article {
 	return Article{
 		ID: article.ID,
 		Title: article.Title,
@@ -14,7 +14,7 @@ func presentArticle(article models.Article) Article {
 	}
 }
 
-func presentComment(comment models.Comment) Comment {
+func PresentComment(comment models.Comment) Comment {
 	return Comment{
 		ID: comment.ID,
 		Title: comment.Title,
@@ -24,21 +24,21 @@ func presentComment(comment models.Comment) Comment {
 	}
 }
 
-func presentCommentDetails(comment models.Comment) CommentDetails {
+func PresentCommentDetails(comment models.Comment) CommentDetails {
 	return CommentDetails{
 		ID: comment.ID,
 		Title: comment.Title,
 		Content: comment.Content,
 		CreatedAt: comment.CreatedAt,
 		UpdatedAt: comment.UpdatedAt,
-		Article: presentArticle(comment.Article),
+		Article: PresentArticle(comment.Article),
 	}
 }
 
-func presentComments(comments []models.Comment) []Comment {
-	var views []Comment
+func PresentComments(comments []models.Comment) []Comment {
+	views := []Comment{}
 	for _, comment := range comments {
-		views = append(views, presentComment(comment))
+		views = append(views, PresentComment(comment))
 	}
 	return views
 }
