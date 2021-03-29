@@ -6,15 +6,25 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Server struct {
 	Router 	*mux.Router
+	Logger 	*log.Logger
 }
 
 func (s *Server) Run() *Server {
+	file, fileErr := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if fileErr != nil {
+		log.Fatal(fileErr)
+	}
+	s.Logger = log.New(file, "logger: ", log.LstdFlags)
+	s.Logger.Print("server start running")
+
 	controller := &controllers.Controller{
 		Db: models.InitGorm(),
+		Logger: s.Logger,
 	}
 	s.InitialiseRoutes(controller)
 	// defer s.DB.Close()
@@ -25,9 +35,3 @@ func (s *Server) Run() *Server {
 
 	return s
 }
-/*
-func (s *Server) addDbInHandler(fn func (http.ResponseWriter, *http.Request, *gorm.DB)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		fn(w, r, s.DB)
-	}
-}*/

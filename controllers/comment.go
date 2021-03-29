@@ -11,19 +11,23 @@ import (
 func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var article models.Article
-	c.Db.First(&article, params["articleId"])
+	result := c.Db.First(&article, params["articleId"])
+	if result.Error != nil {
+		c.ErrorHandler(w, result.Error)
+		return
+	}
 
 	jsonBody, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		c.ErrorHandler(w, err)
 		return
 	}
 
 	var commentDto models.CreateCommentDto
 	err = json.Unmarshal(jsonBody, &commentDto)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		c.ErrorHandler(w, err)
 		return
 	}
 
@@ -44,7 +48,11 @@ func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) 
 func (c *Controller) GetOneCommentHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var comment models.Comment
-	c.Db.First(&comment, params["commentId"])
+	result := c.Db.First(&comment, params["commentId"])
+	if result.Error != nil {
+		c.ErrorHandler(w, result.Error)
+		return
+	}
 
 	c.WriteJson(w, comment)
 }
