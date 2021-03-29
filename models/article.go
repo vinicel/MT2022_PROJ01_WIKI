@@ -45,7 +45,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
 	res := GetOneResponse{}
 	am.Db = am.Db.Select("a.*, ac.firstname")
-	am.Db = am.Db.Where("a.id", 8)
+	am.Db = am.Db.Where("a.id", id)
 	am.Db = am.Db.Joins("INNER JOIN accounts ac on ac.id = a.author_id")
 	am.Db.Table("articles a").Find(&res)
 	return res, nil
