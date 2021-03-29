@@ -9,14 +9,16 @@ type Comment struct {
 	Title 		string
 	Content 	string
 	CreatedAt 	time.Time
-	UpdatedAt 	time.Time
+	UpdatedAt	time.Time
 }
 
 type CommentDetails struct {
-	ID        uint
-	Title     string
-	Content   string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Article   Article
+	ID  		uint
+	Title		string
+	Content		string
+	Firstname	string
+	Lastname 	string
+	CreatedAt	time.Time
+	UpdatedAt	time.Time
+	Article 	Article
 }

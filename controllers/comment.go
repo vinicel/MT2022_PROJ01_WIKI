@@ -12,7 +12,7 @@ import (
 func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var article models.Article
-	result := c.Db.First(&article, params["articleId"])
+	result := c.Db.Preload("Author").First(&article, params["articleId"])
 	if result.Error != nil {
 		c.ErrorHandler(w, result.Error)
 		return
@@ -32,10 +32,18 @@ func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article}
+	// todo remove once user is logged in
+	var account models.Account
+	res := c.Db.First(&account, "1")
+	if res.Error != nil {
+		c.ErrorHandler(w, res.Error)
+		return
+	}
+	// ^^^^^^^^ remove ^^^^^^^^
+	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article, Account: account}
 	c.Db.Create(comment)
 
-	c.WriteJson(w, view.PresentComment(*comment))
+	c.WriteJson(w, view.PresentCommentDetails(*comment))
 }
 
 func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +57,7 @@ func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) 
 func (c *Controller) GetOneCommentHandler(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var comment models.Comment
-	result := c.Db.First(&comment, params["commentId"])
+	result := c.Db.Preload("Account").Preload("Article.Author").First(&comment, params["commentId"])
 	if result.Error != nil {
 		c.ErrorHandler(w, result.Error)
 		return

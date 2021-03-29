@@ -9,6 +9,9 @@ func PresentArticle(article models.Article) Article {
 		ID: article.ID,
 		Title: article.Title,
 		Content: article.Content,
+		AuthorFirstname: article.Author.Firstname,
+		AuthorLastname: article.Author.Lastname,
+		AuthorEmail: article.Author.Email,
 		CreatedAt: article.CreatedAt,
 		UpdatedAt: article.UpdatedAt,
 	}
@@ -29,6 +32,8 @@ func PresentCommentDetails(comment models.Comment) CommentDetails {
 		ID: comment.ID,
 		Title: comment.Title,
 		Content: comment.Content,
+		Firstname: comment.Account.Firstname,
+		Lastname: comment.Account.Lastname,
 		CreatedAt: comment.CreatedAt,
 		UpdatedAt: comment.UpdatedAt,
 		Article: PresentArticle(comment.Article),
