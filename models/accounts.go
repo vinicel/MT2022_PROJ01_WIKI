@@ -1,10 +1,11 @@
 package models
 
 import (
-	"fmt"
 	u "github.com/Wiki-Go/utils"
+	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+	"os"
 	"strings"
 	"time"
 )
@@ -18,9 +19,23 @@ type Accounts struct {
 	UpdatedAt 	time.Time `json:"updated_at"`
 }
 
+type JWTToken struct {
+	Token string `json:"token"`
+}
+
 type Database struct {
 	Db 	*gorm.DB
 	Account Account
+}
+
+func (accounts *Database) hashPassword(password string) string {
+	bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 4)
+	return string(bytes)
+}
+
+func (accounts *Database) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(accounts.Account.Password), []byte(password))
+	return err == nil
 }
 
 func (accounts *Database) Validate() (map[string]interface{}, bool) {
@@ -31,7 +46,7 @@ func (accounts *Database) Validate() (map[string]interface{}, bool) {
 
 	temp := &Accounts{}
 
-	err := InitGorm().Table("accounts").Where("email = ?", accounts.Account.Email).First(temp).Error
+	err := accounts.Db.Table("accounts").Where("email = ?", accounts.Account.Email).First(temp).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return u.Message(false, "Connection error. please retry"), false
 	}
@@ -48,14 +63,24 @@ func (accounts *Database) CreateUser() (map[string]interface{}) {
 		return resp
 	}
 
-	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(accounts.Account.Password), bcrypt.DefaultCost)
-
-	accounts.Account.Password = string(hashedPassword)
-	fmt.Printf("Email: %v\n Password: %v\n Firstname: %v\n Lastname: %v\n", accounts.Account.Email, accounts.Account.Password, accounts.Account.Firstname,accounts.Account.Lastname)
+	accounts.Account.Password = accounts.hashPassword(accounts.Account.Password)
 	accounts.Db.Create(&accounts.Account)
 
 	response := u.Message(true, "Account created")
 	response["account"] = accounts
 
 	return response
+}
+
+func (accounts *Database) GenerateJWT() (JWTToken, error) {
+	signingKey := []byte(os.Getenv("JWT_SECRET"))
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"exp": time.Now().Add(time.Hour * 1 * 1).Unix(),
+		"user_id": int(accounts.Account.ID),
+		"name": accounts.Account.Firstname,
+		"email": accounts.Account.Firstname,
+	})
+	tokenString, err := token.SignedString(signingKey)
+
+	return JWTToken{tokenString}, err
 }
