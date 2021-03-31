@@ -34,7 +34,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	}
 	var res []result
 	modelArticle := Article{}
-	am.Db.Model(modelArticle).Association("Accounts").Find(&res)
+	am.Db.Model(modelArticle).Find(&res)
 	toJson, err := json.Marshal(res)
 	if err != err {
 		return nil, err
@@ -50,4 +50,3 @@ func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
 	am.Db.Table("articles a").Find(&res)
 	return res, nil
 }
-
