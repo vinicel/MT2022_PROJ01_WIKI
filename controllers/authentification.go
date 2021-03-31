@@ -19,7 +19,7 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 
 	accounts := models.Database{
 		Db: c.Db,
-		Account: models.Account{},
+		Account: models.Accounts{},
 	}
 	err = json.Unmarshal(body, &accounts.Account)
 	if err != nil {
@@ -34,10 +34,10 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 		customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Ceci n'est pas un email !")
 	}
 
-	var account models.Database
-	accounts.Db.Where("email = ?", accounts.Account.Email).First(&account.Account)
-	if account.CheckPassword(accounts.Account.Password) {
-		token, err := accounts.GenerateJWT()
+	var user models.Database
+	accounts.Db.Where("email = ?", accounts.Account.Email).First(&user.Account)
+	if user.CheckPassword(accounts.Account.Password) {
+		token, err := accounts.GenerateJWT(user.Account.ID, user.Account.Email)
 		if err != nil {
 			customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Error: " + err.Error())
 			return

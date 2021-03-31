@@ -11,6 +11,7 @@ import (
 )
 
 type Accounts struct {
+	ID          int `json:"id"`
 	Email 		string `json:"email"`
 	Password 	string `json:"password"`
 	Firstname 	string `json:"firstname"`
@@ -25,7 +26,7 @@ type JWTToken struct {
 
 type Database struct {
 	Db 	*gorm.DB
-	Account Account
+	Account Accounts
 }
 
 func (accounts *Database) hashPassword(password string) string {
@@ -72,13 +73,12 @@ func (accounts *Database) CreateUser() (map[string]interface{}) {
 	return response
 }
 
-func (accounts *Database) GenerateJWT() (JWTToken, error) {
+func (accounts *Database) GenerateJWT(id int, email string) (JWTToken, error) {
 	signingKey := []byte(os.Getenv("JWT_SECRET"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"exp": time.Now().Add(time.Hour * 1 * 1).Unix(),
-		"user_id": int(accounts.Account.ID),
-		"name": accounts.Account.Firstname,
-		"email": accounts.Account.Firstname,
+		"user_id": int(id),
+		"email": email,
 	})
 	tokenString, err := token.SignedString(signingKey)
 
