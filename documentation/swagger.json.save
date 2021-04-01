@@ -11,19 +11,23 @@
     }
   },
   "info": {
-    "description": "Api allowing to make an article and comment management via a connection",
+    "description": "Description wiki go",
     "version": "1.0.0",
     "title": "Swagger Wiki-Go",
     "contact": {
       "email": "clement.haller@hetic.net"
     }
   },
-  "host": "localhost:8080",
-  "basePath": "/api/v1",
+  "host": "wikiapiurl",
+  "basePath": "/documentation",
   "tags": [
     {
       "name": "Article",
-      "description": "Article management route"
+      "description": "Article management route",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://google.com"
+      }
     },
     {
       "name": "Account",
@@ -43,7 +47,7 @@
     "http"
   ],
   "paths": {
-    "/articles/{idArticle}": {
+    "/article/{idArticle}": {
       "get": {
         "tags": [
           "Article"
@@ -57,14 +61,9 @@
             "required": true
           }
         ],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
         "responses": {
           "200": {
-            "description": "A User object"
+            "description": "Objet a venir"
           }
         }
       },
@@ -84,22 +83,6 @@
             "name": "idArticle",
             "type": "string",
             "required": true
-          },
-          {
-            "in": "body",
-            "description": "Article object that needs to be updated to the store",
-            "name": "article",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                }
-              }
-            }
           }
         ],
         "responses": {
@@ -109,7 +92,7 @@
         }
       }
     },
-    "/articles": {
+    "/article": {
       "post": {
         "tags": [
           "Article"
@@ -117,28 +100,6 @@
         "summary": "Add a new article to the wiki",
         "description": "",
         "operationId": "addArticle",
-        "parameters": [
-          {
-            "in": "body",
-            "description": "Article object that needs to be added to the store",
-            "name": "article",
-            "schema": {
-              "type": "object",
-              "required": [
-                "title",
-                "content"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
         "security": [
           {
             "ApiKeyAuth": []
@@ -151,14 +112,8 @@
           "application/json"
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "400": {
             "description": "Invalid parameters"
-          },
-          "401": {
-            "description": "Authentication failure"
           }
         }
       },
@@ -170,11 +125,6 @@
         },
         "tags": [
           "Article"
-        ],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
         ],
         "summary": "get all article",
         "operationId": "getAllarticle",
@@ -188,36 +138,6 @@
     },
     "/account": {
       "post": {
-        "parameters": [
-          {
-            "in": "body",
-            "description": "Account object that needs to be added to the store",
-            "name": "article",
-            "schema": {
-              "type": "object",
-              "required": [
-                "fistname",
-                "lastname",
-                "email",
-                "password"
-              ],
-              "properties": {
-                "firstname": {
-                  "type": "string"
-                },
-                "lastname": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
         "summary": "Add a new account in wiki",
         "tags": [
           "Account"
@@ -248,31 +168,11 @@
             "name": "idArticle",
             "type": "string",
             "required": true
-          },
-          {
-            "in": "body",
-            "description": "Account object that needs to be added to the store",
-            "name": "article",
-            "schema": {
-              "type": "object",
-              "required": [
-                "title",
-                "content"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "content": {
-                  "type": "string"
-                }
-              }
-            }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "l'objet renvoyé biento"
           }
         },
         "consumes": [
@@ -294,14 +194,9 @@
             "required": true
           }
         ],
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "l'objet renvoyé biento"
           }
         },
         "consumes": [
@@ -317,28 +212,6 @@
         "tags": [
           "Login"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "description": "Account object that needs to be added to the store",
-            "name": "article",
-            "schema": {
-              "type": "object",
-              "required": [
-                "email",
-                "password"
-              ],
-              "properties": {
-                "emaile": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
         "security": [
           {
             "BasicAuth": []
@@ -346,7 +219,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Return a jwt auth token"
+            "description": "jwt"
           },
           "400": {
             "description": "invalid parameter"
