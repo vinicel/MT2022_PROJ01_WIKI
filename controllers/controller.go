@@ -24,10 +24,11 @@ func (c *Controller) WriteJson(w http.ResponseWriter, value interface{}) {
 	w.Write(output)
 }
 
-func (c *Controller) getUser(r *http.Request) jwt.MapClaims {
+func (c *Controller) getUserAuthenticated(r *http.Request) jwt.MapClaims {
 	tokenString := r.Header.Get("Authorization")
 	tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
 	value, _ := extractClaims(tokenString)
+
 	return value
 }
 
@@ -43,5 +44,6 @@ func extractClaims(tokenStr string) (jwt.MapClaims, bool) {
 		return claims, true
 	} //else
 	log.Printf("Invalid JWT Token")
+
 	return nil, false
 }
