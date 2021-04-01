@@ -1,0 +1,234 @@
+{
+  "swagger": "2.0",
+  "securityDefinitions": {
+    "BasicAuth": {
+      "type": "basic"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "info": {
+    "description": "Description wiki go",
+    "version": "1.0.0",
+    "title": "Swagger Wiki-Go",
+    "contact": {
+      "email": "clement.haller@hetic.net"
+    }
+  },
+  "host": "wikiapiurl",
+  "basePath": "/documentation",
+  "tags": [
+    {
+      "name": "Article",
+      "description": "Article management route",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://google.com"
+      }
+    },
+    {
+      "name": "Account",
+      "description": "Account management route"
+    },
+    {
+      "name": "Comment",
+      "description": "Comment management route"
+    },
+    {
+      "name": "Login",
+      "description": "Connection Route"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/article/{idArticle}": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Get one article",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objet a venir"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Article"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Update article from wiki",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objet a venir"
+          }
+        }
+      }
+    },
+    "/article": {
+      "post": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Add a new article to the wiki",
+        "description": "",
+        "operationId": "addArticle",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid parameters"
+          }
+        }
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Article"
+        ],
+        "summary": "get all article",
+        "operationId": "getAllarticle",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/account": {
+      "post": {
+        "summary": "Add a new account in wiki",
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid parameters"
+          }
+        }
+      }
+    },
+    "/article/{idArticle}/comment/": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "l'objet renvoyé biento"
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "l'objet renvoyé biento"
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "jwt"
+          },
+          "400": {
+            "description": "invalid parameter"
+          },
+          "403": {
+            "description": "Invalid login or password"
+          }
+        }
+      }
+    }
+  }
+}

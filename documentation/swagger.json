@@ -1,0 +1,361 @@
+{
+  "swagger": "2.0",
+  "securityDefinitions": {
+    "BasicAuth": {
+      "type": "basic"
+    },
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "info": {
+    "description": "Api allowing to make an article and comment management via a connection",
+    "version": "1.0.0",
+    "title": "Swagger Wiki-Go",
+    "contact": {
+      "email": "clement.haller@hetic.net"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Article",
+      "description": "Article management route"
+    },
+    {
+      "name": "Account",
+      "description": "Account management route"
+    },
+    {
+      "name": "Comment",
+      "description": "Comment management route"
+    },
+    {
+      "name": "Login",
+      "description": "Connection Route"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/articles/{idArticle}": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Get one article",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A User object"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Article"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "Update article from wiki",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "description": "Article object that needs to be updated to the store",
+            "name": "article",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Objet a venir"
+          }
+        }
+      }
+    },
+    "/articles": {
+      "post": {
+        "tags": [
+          "Article"
+        ],
+        "summary": "Add a new article to the wiki",
+        "description": "",
+        "operationId": "addArticle",
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Article object that needs to be added to the store",
+            "name": "article",
+            "schema": {
+              "type": "object",
+              "required": [
+                "title",
+                "content"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "401": {
+            "description": "Authentication failure"
+          }
+        }
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Article"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "summary": "get all article",
+        "operationId": "getAllarticle",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/account": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Account object that needs to be added to the store",
+            "name": "article",
+            "schema": {
+              "type": "object",
+              "required": [
+                "fistname",
+                "lastname",
+                "email",
+                "password"
+              ],
+              "properties": {
+                "firstname": {
+                  "type": "string"
+                },
+                "lastname": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "summary": "Add a new account in wiki",
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Invalid parameters"
+          }
+        }
+      }
+    },
+    "/article/{idArticle}/comment/": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "description": "Account object that needs to be added to the store",
+            "name": "article",
+            "schema": {
+              "type": "object",
+              "required": [
+                "title",
+                "content"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idArticle",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "description": "Account object that needs to be added to the store",
+            "name": "article",
+            "schema": {
+              "type": "object",
+              "required": [
+                "email",
+                "password"
+              ],
+              "properties": {
+                "emaile": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a jwt auth token"
+          },
+          "400": {
+            "description": "invalid parameter"
+          },
+          "403": {
+            "description": "Invalid login or password"
+          }
+        }
+      }
+    }
+  }
+}
