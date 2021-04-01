@@ -23,3 +23,13 @@ services:
       PMA_HOST: database
       PMA_USER: root
       PMA_PASSWORD: admin
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+    - 8085:8080
+    volumes:
+    - ./documentation:/documentation
+    environment:
+      SWAGGER_JSON: /documentation/swagger.json
+      BASE_URL: /documentation/api/v1
