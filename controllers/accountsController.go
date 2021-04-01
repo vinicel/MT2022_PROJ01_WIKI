@@ -18,7 +18,7 @@ func (c *Controller) CreateUserHandler(w http.ResponseWriter, r *http.Request)  
 
 	accounts := models.Database{
 		Db: c.Db,
-		Account: models.Account{},
+		Account: models.Accounts{},
 	}
 	err = json.Unmarshal(body, &accounts.Account)
 	if err != nil {
