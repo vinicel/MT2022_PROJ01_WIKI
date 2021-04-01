@@ -37,19 +37,3 @@ func JWTMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		next.ServeHTTP(w, r)
 	})
 }
-
-func extractClaims(tokenStr string) (jwt.MapClaims, bool) {
-	hmacSecret := []byte(os.Getenv("JWT_SECRET"))
-	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
-		return hmacSecret, nil
-	})
-	if err != nil {
-		return nil, false
-	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		fmt.Print(claims)
-		return claims, true
-	} //else
-	log.Printf("Invalid JWT Token")
-	return nil, false
-}
