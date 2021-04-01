@@ -1,9 +1,10 @@
 package models
 
 import (
-	"gorm.io/gorm"
-	"gorm.io/driver/mysql"
 	"log"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type Account struct {
@@ -27,10 +28,10 @@ type Comment struct {
 	gorm.Model
 	Title 		string	`gorm:"type:varchar(40);"`
 	Content 	string	`gorm:"not null;type:varchar(150);"`
-	//ArticleID	int
-	//Article 	Article
-	//AccountID	int
-	//Account 	Account
+	ArticleID	int
+	Article 	Article
+	AccountID	int
+	Account 	Account
 }
 
 type ModelInterface interface {
@@ -39,6 +40,11 @@ type ModelInterface interface {
 	GetAll()
 	Update(id int)
 }
+
+// type CreateArticleDto struct {
+// 	Title string
+// 	Content string
+// }
 
 func InitGorm() *gorm.DB {
 	dsn := "user:root@tcp(127.0.0.1:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local"
