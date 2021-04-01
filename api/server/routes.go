@@ -8,7 +8,7 @@ import (
 
 func (s *Server) InitialiseRoutes(controller *controllers.Controller) {
 	s.Router = mux.NewRouter()
-	s.Router.HandleFunc("/api/v1/user/new", middleware.JWTMiddleware(controller.CreateUserHandler)).Methods("POST")
+	s.Router.HandleFunc("/api/v1/user/new", controller.CreateUserHandler).Methods("POST")
 	s.Router.HandleFunc("/api/v1/comments", middleware.JWTMiddleware(controller.CreateCommentHandler)).Methods("POST")
 	s.Router.HandleFunc("/api/v1/comments", middleware.JWTMiddleware(controller.GetCommentsHandler)).Methods("GET")
 	s.Router.HandleFunc("/api/v1/comments/{id}", middleware.JWTMiddleware(controller.GetOneCommentHandler)).Methods("GET")
