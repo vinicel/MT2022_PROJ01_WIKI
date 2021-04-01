@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/Wiki-Go/models"
 	u "github.com/Wiki-Go/utils"
-	customHTTP "github.com/hellojebus/go-envoz-api/http"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -31,7 +30,7 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 	if !strings.Contains(accounts.Account.Email, "@") {
-		customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Ceci n'est pas un email !")
+		http.Error(w, err.Error(), 500)
 	}
 
 	var user models.Database
@@ -39,12 +38,12 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 	if user.CheckPassword(accounts.Account.Password) {
 		token, err := accounts.GenerateJWT(user.Account.ID, user.Account.Email)
 		if err != nil {
-			customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Error: " + err.Error())
+			http.Error(w, err.Error(), 500)
 			return
 		}
 		json.NewEncoder(w).Encode(&token)
 	} else {
-		customHTTP.NewErrorResponse(w, http.StatusUnauthorized, "Password incorrect")
+		http.Error(w, err.Error(), 500)
 		return
 	}
 }
