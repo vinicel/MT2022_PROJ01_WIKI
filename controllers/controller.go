@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -46,4 +48,13 @@ func extractClaims(tokenStr string) (jwt.MapClaims, bool) {
 	log.Printf("Invalid JWT Token")
 
 	return nil, false
+}
+
+func (c *Controller) getUserIdFromToken(r *http.Request) (int, error) {
+	user := c.getUserAuthenticated(r)
+	userId, err := strconv.Atoi(fmt.Sprintf("%v", user["user_id"]))
+	if err != nil {
+		return -1, err
+	}
+	return userId, nil
 }
