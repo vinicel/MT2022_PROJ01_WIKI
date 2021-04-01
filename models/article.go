@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"gorm.io/gorm"
@@ -12,19 +13,18 @@ type ArticleModel struct {
 }
 
 type RelationAuthorResponse struct {
-	ID 		  int
-	Firstname string
-	Lastname  string
+	Firstname string `json:"firstname"`
+	Lastname  string `json:"lastname"`
 }
 
 type GetOneResponse struct {
-	ID        int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Title	  string
-	Content	  string
-	AuthorID  int
-	Author	  RelationAuthorResponse
+	ID        uint					`json:"id"`
+	CreatedAt time.Time 			`json:"createdAt"`
+	UpdatedAt time.Time 			`json:"updatedAt"`
+	Title	  string 				`json:"title"`
+	Content	  string				`json:"content"`
+	AuthorID  int					`json:"authorId"`
+	Author	  RelationAuthorResponse `json:"author"`
 }
 
 func (am *ArticleModel) GetAll() ([]byte, error) {
@@ -34,7 +34,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	}
 	var res []result
 	modelArticle := Article{}
-	am.Db.Model(modelArticle).Association("Accounts").Find(&res)
+	am.Db.Model(modelArticle).Find(&res)
 	toJson, err := json.Marshal(res)
 	if err != err {
 		return nil, err
@@ -43,9 +43,22 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 }
 
 func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
-	article := Article{}
-	res := GetOneResponse{}
-	am.Db.Model(article).Where("id = ?", id).Find(&res)
+	var article Article
+	err := am.Db.Model(article).Where("id = ?", id).Preload("Author").Find(&article)
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
+	res := GetOneResponse{
+		ID: article.ID,
+		CreatedAt: article.CreatedAt,
+		UpdatedAt: article.UpdatedAt,
+		Title: article.Title,
+		Content: article.Content,
+		AuthorID: article.AuthorID,
+		Author: RelationAuthorResponse{
+			Firstname: article.Author.Firstname,
+			Lastname: article.Author.Lastname,
+		},
+	}
 	return res, nil
 }
-
