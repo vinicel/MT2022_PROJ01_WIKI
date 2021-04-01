@@ -69,11 +69,15 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 		http.Error(w, err.Error(), 500)
 		return
 	}
-
-	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content}
+	authorId, err := c.getUserIdFromToken(r)
+	if err != nil {
+		http.Error(w, "Bad Token", 403)
+		return
+	}
+	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content, AuthorID: authorId}
 	c.Db.Create(article)
 
-	c.WriteJson(w, article)
+	c.WriteJson(w, "ok")
 }
 
 func (c *Controller) UpdateArticle(w http.ResponseWriter, r *http.Request){
