@@ -26,11 +26,8 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 	if !strings.Contains(accounts.Account.Email, "@") {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, "email: Is not an email", 400)
 		return
-	}
-	if !strings.Contains(accounts.Account.Email, "@") {
-		http.Error(w, err.Error(), 500)
 	}
 	var user models.Database
 	accounts.Db.Where("email = ?", accounts.Account.Email).First(&user.Account)
