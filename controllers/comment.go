@@ -32,18 +32,15 @@ func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// todo remove once user is logged in
-	var account models.Account
-	res := c.Db.First(&account, "1")
-	if res.Error != nil {
-		c.ErrorHandler(w, res.Error)
+	id, err := c.getUserIdFromToken(r)
+	if err != nil {
+		c.ErrorHandler(w, err)
 		return
 	}
-	// ^^^^^^^^ remove ^^^^^^^^
-	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article, Account: account}
+	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article, AccountID: id}
 	c.Db.Create(comment)
 
-	c.WriteJson(w, view.PresentCommentDetails(*comment))
+	c.WriteJson(w, view.PresentComment(*comment))
 }
 
 func (c *Controller) GetCommentsHandler(w http.ResponseWriter, r *http.Request) {
