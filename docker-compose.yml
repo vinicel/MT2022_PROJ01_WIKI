@@ -12,6 +12,8 @@ services:
       - 3306:3306
     volumes:
       - ./data:/var/lib/mysql
+    networks:
+      backend:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -40,7 +42,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-#    restart: unless-stopped
+    restart: unless-stopped
     environment:
       DATABASE_URL: database
     links:
