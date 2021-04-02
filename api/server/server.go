@@ -31,6 +31,8 @@ func (s *Server) Run() *Server {
 
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost", "http://localhost:8085"},
+		AllowedHeaders: []string{"Authorization"},
+		AllowCredentials: true,
 		Debug: false,
 	})
 	handler := c.Handler(s.Router)
