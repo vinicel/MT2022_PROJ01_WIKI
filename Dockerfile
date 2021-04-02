@@ -13,6 +13,13 @@ COPY ./ .
 
 RUN go build -o main .
 
+RUN go get
+
+RUN go install
+
+RUN go mod vendor
+
+
 EXPOSE 8080
 
 CMD ["./main"]
