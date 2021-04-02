@@ -1,7 +1,7 @@
 package view
 
 import (
-	"github.com/Wiki-Go/models"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 )
 
 func PresentArticle(article models.Article) Article {

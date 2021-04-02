@@ -1,8 +1,8 @@
 package models
 
 import (
-	u "github.com/Wiki-Go/utils"
 	"github.com/dgrijalva/jwt-go"
+	u "github.com/vinicel/MT2022_PROJ01_WIKI/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"os"

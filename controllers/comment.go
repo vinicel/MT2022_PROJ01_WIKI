@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/Wiki-Go/models"
-	"github.com/Wiki-Go/view"
 	"github.com/gorilla/mux"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/view"
 	"io/ioutil"
 	"net/http"
 )

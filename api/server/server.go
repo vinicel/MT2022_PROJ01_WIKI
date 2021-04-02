@@ -1,10 +1,10 @@
 package server
 
 import (
-	"github.com/Wiki-Go/controllers"
-	"github.com/Wiki-Go/models"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/controllers"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	"log"
 	"net/http"
 	"os"
@@ -30,7 +30,7 @@ func (s *Server) Run() *Server {
 	s.InitialiseRoutes(controller)
 
 	c := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost", "http://localhost:8085"},
+		AllowedOrigins: []string{os.Getenv("FRONT_URL"), os.Getenv("DOCUMENTATION_URL")},
 		AllowedHeaders: []string{"Authorization", "Content-Type", "accept"},
 		AllowedMethods: []string{"POST", "GET", "PUT"},
 		AllowCredentials: true,
@@ -38,7 +38,7 @@ func (s *Server) Run() *Server {
 	})
 	handler := c.Handler(s.Router)
 	// defer s.DB.Close()
-	err := http.ListenAndServe(":8080", handler)
+	err := http.ListenAndServe(os.Getenv("PORT"), handler)
 	if err != nil {
 	 	log.Fatal("ListenAndServe: ", err)
 	}

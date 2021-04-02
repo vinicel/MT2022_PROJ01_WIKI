@@ -44,9 +44,10 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 
 func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
 	var article Article
-	err := am.Db.Model(article).Where("id = ?", id).Preload("Author").Find(&article)
-	if err != nil {
+	err := am.Db.Model(article).Where("id = ?", id).Preload("Author").First(&article)
+	if err.Error != nil {
 		fmt.Printf("%v", err)
+		return GetOneResponse{}, err.Error
 	}
 	res := GetOneResponse{
 		ID: article.ID,

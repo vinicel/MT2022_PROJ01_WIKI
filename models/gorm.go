@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -47,7 +49,8 @@ type ModelInterface interface {
 // }
 
 func InitGorm() *gorm.DB {
-	dsn := "user:root@tcp(127.0.0.1:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local"
+	fmt.Println(os.Getenv("DATABASE_URL"))
+	dsn := fmt.Sprintf("user:root@tcp(%v:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("DATABASE_URL"))
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)

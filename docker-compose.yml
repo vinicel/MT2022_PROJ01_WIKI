@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.6"
 
 services:
   database:
@@ -7,11 +7,13 @@ services:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: wikiGo
       MYSQL_USER: user
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: CvUuM6YK3YVveTYc2McSUvkSxRRkFEJn
     ports:
       - 3306:3306
     volumes:
       - ./data:/var/lib/mysql
+    networks:
+      backend:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -23,6 +25,8 @@ services:
       PMA_HOST: database
       PMA_USER: root
       PMA_PASSWORD: admin
+    networks:
+      backend:
 
   swagger:
     image: swaggerapi/swagger-ui
@@ -33,3 +37,29 @@ services:
     environment:
       SWAGGER_JSON: /documentation/swagger.json
       BASE_URL: /documentation/api/v1
+
+  wiki:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: database
+      JWT_SECRET: "QgTPVshDVPqqcNMvinBd8vWhGJ8i7udr"
+      DB_PASSWORD: "CvUuM6YK3YVveTYc2McSUvkSxRRkFEJn"
+      DB_USER: "user"
+      FRONT_URL: "http://localhost"
+      DOCUMENTATION_URL: "http://localhost:8085"
+      PORT: ":8080"
+    links:
+      - database
+    ports:
+    - 8080:8080
+    networks:
+     backend:
+
+networks:
+  backend:
+    driver: bridge
