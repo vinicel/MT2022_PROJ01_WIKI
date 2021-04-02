@@ -11,13 +11,11 @@ RUN go mod download
 
 COPY ./ .
 
-RUN go build -o main .
-
 RUN go get
 
-RUN go install
-
 RUN go mod vendor
+
+RUN go build -o main .
 
 
 EXPOSE 8080
