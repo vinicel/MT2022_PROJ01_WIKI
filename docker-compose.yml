@@ -47,6 +47,7 @@ services:
       - database
     environment:
       DATABASE_URL: database
+      JWT_SECRET: "QgTPVshDVPqqcNMvinBd8vWhGJ8i7udr"
     links:
       - database
     ports:
