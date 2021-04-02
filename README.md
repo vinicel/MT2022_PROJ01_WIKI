@@ -72,3 +72,6 @@ Once docker-compose is up you can navigate to
 ``` bash
 docker-compose up --build
 ```
+Wait for the mysql container to mount
+
+if the server is not up when the mysql container has finished mounting, run the ```docker-compose up``` command again
