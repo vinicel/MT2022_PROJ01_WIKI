@@ -4,6 +4,7 @@ import (
 	"github.com/Wiki-Go/controllers"
 	"github.com/Wiki-Go/models"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
@@ -27,8 +28,14 @@ func (s *Server) Run() *Server {
 		Logger: s.Logger,
 	}
 	s.InitialiseRoutes(controller)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost", "http://localhost:8085"},
+		Debug: false,
+	})
+	handler := c.Handler(s.Router)
 	// defer s.DB.Close()
-	err := http.ListenAndServe(":8080", s.Router)
+	err := http.ListenAndServe(":8080", handler)
 	if err != nil {
 	 	log.Fatal("ListenAndServe: ", err)
 	}
