@@ -74,7 +74,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": [
           "Article"
         ],
@@ -250,7 +250,7 @@
         }
       }
     },
-    "/articles/{idArticle}/comments/": {
+    "/articles/{idArticle}/comments": {
       "post": {
         "tags": [
           "Comment"
