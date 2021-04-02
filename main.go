@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"github.com/vinicel/MT2022_PROJ01_WIKI/api/server"
+)
 
 func main()  {
-	fmt.Print("Hello, Wolrd")
+	api := server.Server{}
+	//api.InitialiseRoutes()
+	api.Run()
 }
