@@ -3,10 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"github.com/vinicel/Wiki-Go/models"
+	"github.com/vinicel/Wiki-Go/view"
 	"io/ioutil"
 	"net/http"
-	"wiki/models"
-	"wiki/view"
 )
 
 func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {

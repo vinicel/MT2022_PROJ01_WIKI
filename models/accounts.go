@@ -2,12 +2,12 @@ package models
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	u "github.com/vinicel/Wiki-Go/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"os"
 	"strings"
 	"time"
-	u "wiki/utils"
 )
 
 type Accounts struct {

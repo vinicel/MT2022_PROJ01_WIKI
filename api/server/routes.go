@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/gorilla/mux"
-	"wiki/controllers"
-	"wiki/middleware"
+	"github.com/vinicel/Wiki-Go/controllers"
+	"github.com/vinicel/Wiki-Go/middleware"
 )
 
 func (s *Server) InitialiseRoutes(controller *controllers.Controller) {

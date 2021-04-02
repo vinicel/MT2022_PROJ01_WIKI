@@ -1,6 +1,8 @@
 package main
 
-import "wiki/api/server"
+import (
+	"github.com/vinicel/Wiki-Go/api/server"
+)
 
 func main()  {
 	api := server.Server{}

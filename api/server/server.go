@@ -2,11 +2,11 @@ package server
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/vinicel/Wiki-Go/controllers"
+	"github.com/vinicel/Wiki-Go/models"
 	"log"
 	"net/http"
 	"os"
-	"wiki/controllers"
-	"wiki/models"
 )
 
 type Server struct {

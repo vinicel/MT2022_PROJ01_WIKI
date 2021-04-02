@@ -3,11 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/vinicel/Wiki-Go/models"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
-	"wiki/models"
 
 	"github.com/gorilla/mux"
 )

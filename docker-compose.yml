@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.6"
 
 services:
   database:
@@ -23,6 +23,8 @@ services:
       PMA_HOST: database
       PMA_USER: root
       PMA_PASSWORD: admin
+    networks:
+      backend:
 
   swagger:
     image: swaggerapi/swagger-ui
@@ -34,13 +36,20 @@ services:
       SWAGGER_JSON: /documentation/swagger.json
       BASE_URL: /documentation/api/v1
 
-  api:
-    image: golang:1.6.1-alpine
-    volumes:
-    - .~/go:/usr/src/wiki
+  wiki5:
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    restart: unless-stopped
     environment:
-      GOOS: linux/amd64
-    working_dir: /usr/src/wiki/go/github.com/Wiki-Go
-    command: go run main.go
+      DATABASE_URL: database
+    links:
+      - database
     ports:
-      - 8080:8080
+    - 8080:8080
+    networks:
+     backend:
+
+networks:
+  backend:
+    driver: bridge

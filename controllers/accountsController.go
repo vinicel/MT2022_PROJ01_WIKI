@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
+	"github.com/vinicel/Wiki-Go/models"
+	u "github.com/vinicel/Wiki-Go/utils"
 	"io/ioutil"
 	"net/http"
-	"wiki/models"
-	u "wiki/utils"
 )
 
 
