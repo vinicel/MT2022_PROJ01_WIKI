@@ -62,17 +62,13 @@ A complete documentation with a clean repository is mandatory.
 Once docker-compose is up you can navigate to 
 `http://localhost:8085/documentation/api/v1/`
 
+
+## Api server
+`http://localhost:8080`
+
 ## Installation
 
-* Launch MySQL, and swagger server
+* Launch MySQL, phpmyadmin, swagger, and api
 ``` bash
-docker-compose up -d
-```
-* Build
-``` bash
-go build main.go
-```
-* Run
-``` bash
-./main
+docker-compose up --build
 ```
