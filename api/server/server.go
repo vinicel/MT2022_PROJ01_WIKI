@@ -1,12 +1,12 @@
 package server
 
 import (
-	"github.com/Wiki-Go/controllers"
-	"github.com/Wiki-Go/models"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"os"
+	"wiki/controllers"
+	"wiki/models"
 )
 
 type Server struct {

@@ -33,3 +33,14 @@ services:
     environment:
       SWAGGER_JSON: /documentation/swagger.json
       BASE_URL: /documentation/api/v1
+
+  api:
+    image: golang:1.6.1-alpine
+    volumes:
+    - .~/go:/usr/src/wiki
+    environment:
+      GOOS: linux/amd64
+    working_dir: /usr/src/wiki/go/github.com/Wiki-Go
+    command: go run main.go
+    ports:
+      - 8080:8080

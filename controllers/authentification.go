@@ -2,11 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/Wiki-Go/models"
-	u "github.com/Wiki-Go/utils"
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"wiki/models"
+	u "wiki/utils"
 )
 
 func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {

@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"wiki/models"
 
-	"github.com/Wiki-Go/models"
 	"github.com/gorilla/mux"
 )
 

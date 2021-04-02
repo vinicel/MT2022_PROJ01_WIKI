@@ -2,11 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/Wiki-Go/models"
-	"github.com/Wiki-Go/view"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
+	"wiki/models"
+	"wiki/view"
 )
 
 func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {

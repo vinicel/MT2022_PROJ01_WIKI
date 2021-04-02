@@ -1,4 +1,4 @@
-module github.com/Wiki-Go
+module wiki
 
 go 1.15
 
