@@ -3,8 +3,8 @@ package server
 import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
-	"github.com/vinicel/Wiki-Go/controllers"
-	"github.com/vinicel/Wiki-Go/models"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/controllers"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	"log"
 	"net/http"
 	"os"

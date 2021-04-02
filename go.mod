@@ -1,4 +1,4 @@
-module github.com/vinicel/Wiki-Go
+module github.com/vinicel/MT2022_PROJ01_WIKI
 
 go 1.15
 

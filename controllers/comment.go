@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/vinicel/Wiki-Go/models"
-	"github.com/vinicel/Wiki-Go/view"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/view"
 	"io/ioutil"
 	"net/http"
 )

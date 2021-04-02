@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vinicel/Wiki-Go/models"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	"gorm.io/gorm"
 	"io/ioutil"
 	"log"

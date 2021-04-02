@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/vinicel/Wiki-Go/api/server"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/api/server"
 )
 
 func main()  {
