@@ -26,7 +26,7 @@ A complete documentation with a clean repository is mandatory.
   
 ## Directory Structure
 
-``` bash
+```
 <Wiki-Go>/
 ├─ api/
 |   └─ server/
