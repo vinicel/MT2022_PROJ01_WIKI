@@ -39,8 +39,8 @@
     }
   ],
   "schemes": [
-    "https",
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/articles/{idArticle}": {
@@ -64,11 +64,17 @@
         ],
         "responses": {
           "200": {
-            "description": "A User object"
+            "description": "Article object"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "401": {
+            "description": "Authentication failure"
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": [
           "Article"
         ],
@@ -104,7 +110,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Objet a venir"
+            "description": "Article object"
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "401": {
+            "description": "Authentication failure"
           }
         }
       }
@@ -152,7 +167,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Article object"
           },
           "400": {
             "description": "Invalid parameters"
@@ -165,7 +180,10 @@
       "get": {
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Article object list"
+          },
+          "401": {
+            "description": "Authentication failure"
           }
         },
         "tags": [
@@ -186,7 +204,7 @@
         ]
       }
     },
-    "/account": {
+    "/accounts": {
       "post": {
         "parameters": [
           {
@@ -232,11 +250,12 @@
         }
       }
     },
-    "/article/{idArticle}/comment/": {
+    "/articles/{idArticle}/comments": {
       "post": {
         "tags": [
           "Comment"
         ],
+        "summary": "Create a comment in an article",
         "security": [
           {
             "ApiKeyAuth": []
@@ -251,8 +270,8 @@
           },
           {
             "in": "body",
-            "description": "Account object that needs to be added to the store",
-            "name": "article",
+            "description": "Comment object that needs to be added in this article",
+            "name": "comment",
             "schema": {
               "type": "object",
               "required": [
@@ -271,8 +290,17 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": ""
+          "201": {
+            "description": "A comment object"
+          },
+          "400": {
+            "description": "invalid parameter"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "401": {
+            "description": "Authentication failure"
           }
         },
         "consumes": [
@@ -286,6 +314,7 @@
         "tags": [
           "Comment"
         ],
+        "summary": "Get all comments for one article",
         "parameters": [
           {
             "in": "path",
@@ -301,7 +330,13 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Comment object list"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "401": {
+            "description": "Authentication failure"
           }
         },
         "consumes": [
@@ -312,6 +347,38 @@
         ]
       }
     },
+    "/comments/{idComment}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get one comment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idComment",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A comment object"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "401": {
+            "description": "Authentication failure"
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "tags": [
@@ -320,8 +387,8 @@
         "parameters": [
           {
             "in": "body",
-            "description": "Account object that needs to be added to the store",
-            "name": "article",
+            "description": "Account credentials that are used to login",
+            "name": "credentials",
             "schema": {
               "type": "object",
               "required": [
@@ -329,7 +396,7 @@
                 "password"
               ],
               "properties": {
-                "emaile": {
+                "email": {
                   "type": "string"
                 },
                 "password": {

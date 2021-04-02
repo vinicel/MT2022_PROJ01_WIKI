@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/vinicel/Wiki-Go/models"
+	"gorm.io/gorm"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -43,7 +45,13 @@ func (c *Controller) GetOne(w http.ResponseWriter, r *http.Request) {
 	articleModel := &models.ArticleModel{
 		Db: c.Db,
 	}
-	article, _ := articleModel.GetOne(id)
+	article, err := articleModel.GetOne(id)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			http.Error(w, err.Error(), 404)
+			return
+		}
+	}
 	res, err := json.Marshal(article)
 	if err != nil {
 		code := http.StatusInternalServerError

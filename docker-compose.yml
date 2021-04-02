@@ -43,6 +43,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      - database
     environment:
       DATABASE_URL: database
     links:

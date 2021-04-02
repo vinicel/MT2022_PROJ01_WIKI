@@ -9,6 +9,13 @@ with MySQL for the database.
 
 A complete documentation with a clean repository is mandatory.
 
+## Developers
+
+- Corentin Croizat
+- Christophe Charlebois
+- Clément Haller
+- Guillaume Cornet
+
 ## Table of Contents
 
 - [Directory Structure](#directory-structure)
@@ -19,11 +26,20 @@ A complete documentation with a clean repository is mandatory.
   
 ## Directory Structure
 
-``` bash
+```
 <Wiki-Go>/
 ├─ api/
+|   └─ server/
+|       └─ routes.go
+|       └─ server.go
 ├─ controllers/
+├─ documentation/
+|   └─ swagger.json
+├─ middleware/
 ├─ models/
+├─ utils/
+├─ view/
+├─ docker-compose.yml
 ├─ main.go
 └─ README.md
 ```
@@ -39,18 +55,24 @@ A complete documentation with a clean repository is mandatory.
 * [gorm](https://gorm.io/) - ORM library for Go
 * [jwt](https://github.com/dgrijalva/jwt-go) - Go implementation of [JSON Web Tokens](https://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
 * [swagger](https://github.com/go-swagger/go-swagger) - Go implementation of [Swagger 2.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md)
+* [CORS](https://github.com/rs/cors) - Go cors handler
 
 ## Api Documentation
 
-Todo => add link to swagger documentation
+Once docker-compose is up you can navigate to 
+`http://localhost:8085/documentation/api/v1/`
 
 ## Installation
 
-* Build the project
+* Launch MySQL, and swagger server
+``` bash
+docker-compose up -d
+```
+* Build
 ``` bash
 go build main.go
 ```
-* todo => add more installation steps
+* Run
 ``` bash
-(I don't know Go)
+./main
 ```

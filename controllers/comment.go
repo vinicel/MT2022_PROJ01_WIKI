@@ -40,6 +40,7 @@ func (c *Controller) CreateCommentHandler(w http.ResponseWriter, r *http.Request
 	comment := &models.Comment{Title: commentDto.Title, Content: commentDto.Content, Article: article, AccountID: id}
 	c.Db.Create(comment)
 
+	w.WriteHeader(201)
 	c.WriteJson(w, view.PresentComment(*comment))
 }
 

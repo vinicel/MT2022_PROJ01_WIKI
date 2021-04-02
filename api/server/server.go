@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 	"github.com/vinicel/Wiki-Go/controllers"
 	"github.com/vinicel/Wiki-Go/models"
 	"log"
@@ -27,8 +28,17 @@ func (s *Server) Run() *Server {
 		Logger: s.Logger,
 	}
 	s.InitialiseRoutes(controller)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://localhost", "http://localhost:8085"},
+		AllowedHeaders: []string{"Authorization", "Content-Type", "accept"},
+		AllowedMethods: []string{"POST", "GET", "PUT"},
+		AllowCredentials: true,
+		Debug: false,
+	})
+	handler := c.Handler(s.Router)
 	// defer s.DB.Close()
-	err := http.ListenAndServe(":8080", s.Router)
+	err := http.ListenAndServe(":8080", handler)
 	if err != nil {
 	 	log.Fatal("ListenAndServe: ", err)
 	}
