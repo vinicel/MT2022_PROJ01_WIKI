@@ -14,7 +14,6 @@ import (
 )
 
 type Controller struct {
-	Db 		*gorm.DB
 	Logger 	*log.Logger
 }
 

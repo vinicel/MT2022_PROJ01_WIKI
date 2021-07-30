@@ -22,9 +22,8 @@ func (s *Server) Run() *Server {
 	}
 	s.Logger = log.New(file, "logger: ", log.LstdFlags)
 	s.Logger.Print("server start running")
-
+	models.InitGorm()
 	controller := &controllers.Controller{
-		Db: models.InitGorm(),
 		Logger: s.Logger,
 	}
 	s.InitialiseRoutes(controller)

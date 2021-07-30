@@ -45,7 +45,7 @@ type ModelInterface interface {
 // 	Content string
 // }
 
-func InitGorm() *gorm.DB {
+func InitGorm() {
 	/*
 	fmt.Println(os.Getenv("DATABASE_URL"))
 	dsn := fmt.Sprintf("%v:%v@tcp(%v:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD") ,os.Getenv("DATABASE_URL"))
@@ -58,5 +58,4 @@ func InitGorm() *gorm.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return connector.Db
 }
