@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"time"
 
 	"gorm.io/gorm"
@@ -34,7 +35,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	}
 	var res []result
 	modelArticle := Article{}
-	am.Db.Model(modelArticle).Find(&res)
+	connector.Db.Model(modelArticle).Find(&res)
 	toJson, err := json.Marshal(res)
 	if err != err {
 		return nil, err

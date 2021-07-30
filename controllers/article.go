@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	"gorm.io/gorm"
 	"io/ioutil"
@@ -84,7 +85,7 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content, AuthorID: authorId}
-	c.Db.Create(article)
+	connector.Db.Create(article)
 
 	c.WriteJson(w, "ok")
 }
