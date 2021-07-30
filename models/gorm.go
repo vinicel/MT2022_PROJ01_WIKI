@@ -1,12 +1,9 @@
 package models
 
 import (
-	"fmt"
-	"log"
-	"os"
-
-	"gorm.io/driver/mysql"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"gorm.io/gorm"
+	"log"
 )
 
 type Account struct {
@@ -49,15 +46,17 @@ type ModelInterface interface {
 // }
 
 func InitGorm() *gorm.DB {
+	/*
 	fmt.Println(os.Getenv("DATABASE_URL"))
 	dsn := fmt.Sprintf("%v:%v@tcp(%v:3306)/wikiGo?charset=utf8mb4&parseTime=True&loc=Local", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD") ,os.Getenv("DATABASE_URL"))
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = db.AutoMigrate(&Account{}, &Article{}, &Comment{})
+	*/
+	err := connector.Db.AutoMigrate(&Account{}, &Article{}, &Comment{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	return db
+	return connector.Db
 }
