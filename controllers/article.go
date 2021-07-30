@@ -20,6 +20,7 @@ func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 		ID		int		`json:"id"`
 		Title 	string	`json:"title"`
 	}
+
 	var res []result
  	c.Db.Model(&article).Select("ID", "Title").Find(&res)
 	fmt.Printf("%v", res)
