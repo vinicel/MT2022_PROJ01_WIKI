@@ -11,9 +11,6 @@ import (
 
 var Db *gorm.DB = initDb()
 
-func init() {
-}
-
 func initDb() *gorm.DB  {
 	gotenv.Load()
 	fmt.Println(os.Getenv("DATABASE_URL"))

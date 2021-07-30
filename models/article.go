@@ -3,13 +3,11 @@ package models
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type ArticleModel struct {
-	Db		*gorm.DB
 }
 
 type RelationAuthorResponse struct {
@@ -34,7 +32,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 	}
 	var res []result
 	modelArticle := Article{}
-	am.Db.Model(modelArticle).Find(&res)
+	connector.Db.Model(modelArticle).Find(&res)
 	toJson, err := json.Marshal(res)
 	if err != err {
 		return nil, err
@@ -44,7 +42,7 @@ func (am *ArticleModel) GetAll() ([]byte, error) {
 
 func (am *ArticleModel) GetOne(id int) (GetOneResponse, error) {
 	var article Article
-	err := am.Db.Model(article).Where("id = ?", id).Preload("Author").First(&article)
+	err := connector.Db.Model(article).Where("id = ?", id).Preload("Author").First(&article)
 	if err.Error != nil {
 		fmt.Printf("%v", err)
 		return GetOneResponse{}, err.Error
