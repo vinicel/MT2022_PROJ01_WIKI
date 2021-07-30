@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	"gorm.io/gorm"
 	"io/ioutil"
@@ -22,7 +23,7 @@ func (c *Controller) GetAllArticles(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var res []result
- 	c.Db.Model(&article).Select("ID", "Title").Find(&res)
+ 	connector.Db.Model(&article).Select("ID", "Title").Find(&res)
 	fmt.Printf("%v", res)
 	output, err := json.Marshal(res)
 	if err != nil {
@@ -43,9 +44,7 @@ func (c *Controller) GetOne(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(code), code)
 		log.Println(err)
 	}
-	articleModel := &models.ArticleModel{
-		Db: c.Db,
-	}
+	articleModel := &models.ArticleModel{}
 	article, err := articleModel.GetOne(id)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -84,7 +83,7 @@ func (c *Controller) CreateArticle(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content, AuthorID: authorId}
-	c.Db.Create(article)
+	connector.Db.Create(article)
 
 	c.WriteJson(w, "ok")
 }
@@ -106,6 +105,6 @@ func (c *Controller) UpdateArticle(w http.ResponseWriter, r *http.Request){
 	}
 
 	article := &models.Article{Title: articleDto.Title, Content: articleDto.Content}
-	c.Db.First(&article, params["id"]).Updates(map[string]interface{}{"title": articleDto.Title, "content": articleDto.Content})
+	connector.Db.First(&article, params["id"]).Updates(map[string]interface{}{"title": articleDto.Title, "content": articleDto.Content})
 	c.WriteJson(w, article)
 }
