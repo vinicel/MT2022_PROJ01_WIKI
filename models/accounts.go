@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/dgrijalva/jwt-go"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	u "github.com/vinicel/MT2022_PROJ01_WIKI/utils"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -25,7 +26,6 @@ type JWTToken struct {
 }
 
 type Database struct {
-	Db 	*gorm.DB
 	Account Accounts
 }
 
@@ -47,7 +47,7 @@ func (accounts *Database) Validate() (map[string]interface{}, bool) {
 
 	temp := &Accounts{}
 
-	err := accounts.Db.Table("accounts").Where("email = ?", accounts.Account.Email).First(temp).Error
+	err :=connector.Db.Table("accounts").Where("email = ?", accounts.Account.Email).First(temp).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return u.Message(false, "Connection error. please retry"), false
 	}
@@ -65,7 +65,7 @@ func (accounts *Database) CreateUser() (map[string]interface{}) {
 	}
 
 	accounts.Account.Password = accounts.hashPassword(accounts.Account.Password)
-	accounts.Db.Create(&accounts.Account)
+	connector.Db.Create(&accounts.Account)
 
 	response := u.Message(true, "Account created")
 	response["account"] = accounts
