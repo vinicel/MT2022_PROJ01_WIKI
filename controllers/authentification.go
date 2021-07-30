@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"github.com/vinicel/MT2022_PROJ01_WIKI/connector"
 	"github.com/vinicel/MT2022_PROJ01_WIKI/models"
 	u "github.com/vinicel/MT2022_PROJ01_WIKI/utils"
 	"io/ioutil"
@@ -17,7 +18,6 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 	}
 
 	accounts := models.Database{
-		Db: c.Db,
 		Account: models.Accounts{},
 	}
 	err = json.Unmarshal(body, &accounts.Account)
@@ -30,7 +30,7 @@ func (c *Controller) LoginHandler(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 	var user models.Database
-	accounts.Db.Where("email = ?", accounts.Account.Email).First(&user.Account)
+	connector.Db.Where("email = ?", accounts.Account.Email).First(&user.Account)
 	if user.CheckPassword(accounts.Account.Password) {
 		token, err := accounts.GenerateJWT(user.Account.ID, user.Account.Email)
 		if err != nil {
